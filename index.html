@@ -96,7 +96,7 @@
     <!-- Header Section -->
     <header class="hero-gradient border-b border-blue-100 py-20 px-6 text-center shadow-sm">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-2xl md:text-4xl font-bold text-slate-900 leading-tight drop-shadow-md">
+            <h1 class="text-2xl md:text-4xl font-bold text-slate-900 leading-tight drop-shadow-sm">
                 兵庫医科大学看護学部、大学院看護学研究科<br>精神看護学研究室
             </h1>
             <p class="mt-4 text-lg text-slate-600 font-medium">
@@ -112,8 +112,7 @@
     <!-- Navigation -->
     <nav class="sticky top-0 bg-[#001f3f] backdrop-blur shadow-md z-50">
         <ul class="flex flex-wrap justify-center gap-4 md:gap-8 py-4 font-bold text-white">
-            <li><a href="#members" class="nav-link hover:text-blue-300">メンバー紹介</a></li>
-            <li><a href="#research" class="nav-link hover:text-blue-300">研究業績</a></li>
+            <li><a href="#members" class="nav-link hover:text-blue-300">メンバー紹介・研究業績</a></li>
             <li><a href="#message" class="nav-link hover:text-blue-300">学生へのメッセージ</a></li>
             <li><a href="#news" class="nav-link hover:text-blue-300">お知らせ</a></li>
             <li><a href="#contact" class="nav-link hover:text-blue-300">お問い合わせ</a></li>
@@ -139,18 +138,18 @@
                         <span class="text-lg md:text-xl font-mono font-bold text-slate-500">main-6.jpg</span>
                     </div>
                     <p class="mt-6 text-sm italic text-slate-500 text-center px-4">
-                        スライドショー
+                        スライドショー用に6枚の画像（main-1.jpg 〜 main-6.jpg）を順次アップロードしてください
                     </p>
                 </div>
 
                 <!-- Slides Container -->
                 <div id="slides-container">
-                    <img src="main-1.jpg" class="slide active main-visual-photo" onerror="this.style.display='none';">
-                    <img src="main-2.jpg" class="slide main-visual-photo" onerror="this.style.display='none';">
-                    <img src="main-3.jpg" class="slide main-visual-photo" onerror="this.style.display='none';">
-                    <img src="main-4.jpg" class="slide main-visual-photo" onerror="this.style.display='none';">
-                    <img src="main-5.jpg" class="slide main-visual-photo" onerror="this.style.display='none';">
-                    <img src="main-6.jpg" class="slide main-visual-photo" onerror="this.style.display='none';">
+                    <img src="main-1.jpg" alt="メイン画像 1" class="slide active main-visual-photo" onerror="this.style.display='none';">
+                    <img src="main-2.jpg" alt="メイン画像 2" class="slide main-visual-photo" onerror="this.style.display='none';">
+                    <img src="main-3.jpg" alt="メイン画像 3" class="slide main-visual-photo" onerror="this.style.display='none';">
+                    <img src="main-4.jpg" alt="メイン画像 4" class="slide main-visual-photo" onerror="this.style.display='none';">
+                    <img src="main-5.jpg" alt="メイン画像 5" class="slide main-visual-photo" onerror="this.style.display='none';">
+                    <img src="main-6.jpg" alt="メイン画像 6" class="slide main-visual-photo" onerror="this.style.display='none';">
                 </div>
 
                 <!-- Slideshow Indicators -->
@@ -167,7 +166,7 @@
         
         <!-- Members Section -->
         <section id="members" class="mb-20">
-            <h2 class="text-2xl font-bold text-blue-900 border-l-8 border-blue-600 pl-4 mb-10 text-center md:text-left">メンバー紹介</h2>
+            <h2 class="text-2xl font-bold text-blue-900 border-l-8 border-blue-600 pl-4 mb-10 text-center md:text-left">メンバー紹介・研究業績</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- Member 1: Professor Fujimoto (Midnight Navy) -->
@@ -206,15 +205,17 @@
                             </div>
                         </div>
 
+                        <!-- Research Achievement Heading -->
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-6 mb-2">研究業績</h4>
+
                         <!-- More Info Button -->
-                        <button onclick="toggleInfo('info-fujimoto', this)" class="mt-4 w-full border border-slate-200 text-slate-600 py-2 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors flex items-center justify-center gap-1">
+                        <button onclick="toggleInfo('info-fujimoto', this)" class="w-full border border-slate-200 text-slate-600 py-2 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors flex items-center justify-center gap-1">
                             <span>もっと見る</span>
                             <svg class="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
 
                         <!-- Expandable Content Section -->
                         <div id="info-fujimoto" class="expandable-content text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <p class="font-bold mb-2 text-blue-800">経歴・実績</p>
                             <p>現在、詳細な情報を準備中です。</p>
                         </div>
                     </div>
@@ -256,15 +257,17 @@
                             </div>
                         </div>
 
+                        <!-- Research Achievement Heading -->
+                        <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider mt-6 mb-2">研究業績</h4>
+
                         <!-- More Info Button -->
-                        <button onclick="toggleInfo('info-ishida', this)" class="mt-4 w-full border border-rose-100 text-rose-700 py-2 rounded-xl text-xs font-bold hover:bg-rose-50 transition-colors flex items-center justify-center gap-1">
+                        <button onclick="toggleInfo('info-ishida', this)" class="w-full border border-rose-100 text-rose-700 py-2 rounded-xl text-xs font-bold hover:bg-rose-50 transition-colors flex items-center justify-center gap-1">
                             <span>もっと見る</span>
                             <svg class="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
 
                         <!-- Expandable Content Section -->
                         <div id="info-ishida" class="expandable-content text-sm text-slate-600 bg-rose-50/50 p-4 rounded-xl border border-rose-100">
-                            <p class="font-bold mb-2 text-rose-800">経歴・実績</p>
                             <p>現在、詳細な情報を準備中です。</p>
                         </div>
                     </div>
@@ -306,46 +309,24 @@
                             </div>
                         </div>
 
+                        <!-- Research Achievement Heading -->
+                        <h4 class="text-xs font-bold text-teal-400 uppercase tracking-wider mt-6 mb-2">研究業績</h4>
+
                         <!-- More Info Button -->
-                        <button onclick="toggleInfo('info-mukaihata', this)" class="mt-4 w-full border border-teal-200 text-teal-600 py-2 rounded-xl text-xs font-bold hover:bg-teal-50 transition-colors flex items-center justify-center gap-1">
+                        <button onclick="toggleInfo('info-mukaihata', this)" class="w-full border border-teal-200 text-teal-600 py-2 rounded-xl text-xs font-bold hover:bg-teal-50 transition-colors flex items-center justify-center gap-1">
                             <span>もっと見る</span>
                             <svg class="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
 
                         <!-- Expandable Content Section -->
-                        <div id="info-mukaihata" class="expandable-content text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-teal-50">
-                            <p class="font-bold mb-2 text-teal-800">経歴・実績</p>
-                            <a href="https://t-mukkun.github.io/my-website/" target="_blank" class="inline-block mt-1 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors text-xs font-bold">
-                                外部リンクをご参照ください。
+                        <div id="info-mukaihata" class="expandable-content text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-teal-50 text-center">
+                            <a href="https://t-mukkun.github.io/my-website/" target="_blank" class="inline-block mt-1 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors text-xs font-bold shadow-sm">
+                                外部リンクをご参照ください
                             </a>
                         </div>
                     </div>
                 </div>
 
-            </div>
-        </section>
-
-        <!-- Research Section -->
-        <section id="research" class="mb-20">
-            <h2 class="text-2xl font-bold text-blue-900 border-l-8 border-blue-600 pl-4 mb-8">研究業績</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                    <h3 class="font-bold text-blue-700 mb-3 flex items-center gap-2">
-                        <span>📚</span> 主要な研究領域
-                    </h3>
-                    <ul class="text-sm space-y-2 text-slate-600 list-disc pl-5">
-                        <li>精神科訪問看護の安全性とリスクマネジメント</li>
-                        <li>精神科看護実践の質的探求（現象学）</li>
-                        <li>看護職のウェルビーイングと職場定着支援</li>
-                        <li>多職種連携による地域生活支援モデルの構築</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                    <h3 class="font-bold text-blue-700 mb-3 flex items-center gap-2">
-                        <span>📝</span> 最近の公表論文
-                    </h3>
-                    <p class="text-sm text-slate-500 italic">各教員の詳細な業績リストは、大学の研究者データベース等とも連携予定です。</p>
-                </div>
             </div>
         </section>
 
@@ -472,3 +453,4 @@
 
 </body>
 </html>
+
