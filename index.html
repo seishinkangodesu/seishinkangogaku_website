@@ -604,30 +604,51 @@
             <h2 class="text-2xl font-bold text-blue-900 border-l-8 border-blue-600 pl-4 mb-2">お知らせ</h2>
             <p class="text-sm text-slate-500 mb-6 pl-4 font-medium italic">随時更新します</p>
 
+            <!--
+            News image rule:
+            - Standby image: news-standby.jpg
+            - Per-news image: news-YYYY-MM-DD-short-name.jpg
+            - Use lowercase letters, numbers, and hyphens only.
+            - Set each news item's data-news-image to its related image.
+            - Use data-news-image="news-standby.jpg" when there is no related image.
+            - Items with a related image automatically show a "画像を見る" badge.
+            - On click, the related image is shown for 5 seconds, then returns to standby.
+            -->
             <!-- News Scrollable Box -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden max-w-4xl">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden w-full">
+                <div class="grid gap-0 lg:grid-cols-[minmax(0,1fr)_320px]">
                 <!-- Inner scrollable container -->
                 <div class="max-h-80 overflow-y-auto px-6 hide-scrollbar custom-scrollbar">
                     <ul class="divide-y divide-slate-100">
                         <li
-                            class="py-5 flex flex-col md:flex-row md:items-start gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors p-2 -mx-2 rounded-lg">
+                            class="news-item py-5 flex flex-col md:flex-row md:items-start gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors p-2 -mx-2 rounded-lg"
+                            data-news-image="news-standby.jpg">
                             <span
                                 class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full w-fit whitespace-nowrap md:mt-0.5">2026.04.01</span>
                             <span class="text-slate-700 leading-relaxed pt-1 md:pt-0">精神看護学研究室にM1の学生が入学されました。</span>
                         </li>
                         <li
-                            class="py-5 flex flex-col md:flex-row md:items-start gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors p-2 -mx-2 rounded-lg">
+                            class="news-item py-5 flex flex-col md:flex-row md:items-start gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors p-2 -mx-2 rounded-lg"
+                            data-news-image="news-2026-03-04-website-open.jpg">
                             <span
                                 class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full w-fit whitespace-nowrap md:mt-0.5">2026.03.04</span>
                             <span class="text-slate-700 leading-relaxed pt-1 md:pt-0">精神看護学研究室のウェブサイトを公開いたしました。</span>
                         </li>
                         <li
-                            class="py-5 flex flex-col md:flex-row md:items-start gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors p-2 -mx-2 rounded-lg">
+                            class="news-item py-5 flex flex-col md:flex-row md:items-start gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors p-2 -mx-2 rounded-lg"
+                            data-news-image="news-standby.jpg">
                             <span
                                 class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full w-fit whitespace-nowrap md:mt-0.5">2026.03.01</span>
                             <span class="text-slate-700 leading-relaxed pt-1 md:pt-0">新年度に向けて、研究室の情報を更新中です。</span>
                         </li>
                     </ul>
+                </div>
+                <div class="border-t lg:border-t-0 lg:border-l border-slate-100 bg-slate-50/60 p-4">
+                    <div class="aspect-[4/3] overflow-hidden rounded-xl bg-white shadow-inner ring-1 ring-slate-200">
+                        <img id="news-preview-image" src="news-standby.jpg" data-standby-src="news-standby.jpg"
+                            alt="" class="h-full w-full object-cover transition-opacity duration-300">
+                    </div>
+                </div>
                 </div>
             </div>
         </section>
@@ -667,6 +688,65 @@
             const dateElement = document.getElementById('current-date');
             if (dateElement) {
                 dateElement.textContent = `${year}年${month}月${day}日`;
+            }
+
+            const newsPreviewImage = document.getElementById('news-preview-image');
+            const newsItems = document.querySelectorAll('.news-item');
+            let newsImageResetTimer;
+
+            function setNewsPreview(src) {
+                if (!newsPreviewImage || !src) return;
+
+                newsPreviewImage.style.opacity = '0';
+                window.setTimeout(() => {
+                    newsPreviewImage.src = src;
+                    newsPreviewImage.style.opacity = '1';
+                }, 150);
+            }
+
+            if (newsPreviewImage && newsItems.length > 0) {
+                const standbySrc = newsPreviewImage.dataset.standbySrc || 'news-standby.jpg';
+
+                newsPreviewImage.addEventListener('error', () => {
+                    if (!newsPreviewImage.src.endsWith(standbySrc)) {
+                        setNewsPreview(standbySrc);
+                    }
+                });
+
+                newsItems.forEach((item) => {
+                    const relatedImage = item.dataset.newsImage || standbySrc;
+                    const hasRelatedImage = relatedImage !== standbySrc;
+
+                    if (!hasRelatedImage) return;
+
+                    item.classList.add('cursor-pointer', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-300');
+                    item.setAttribute('tabindex', '0');
+                    item.setAttribute('role', 'button');
+
+                    if (!item.querySelector('.news-image-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'news-image-badge text-xs font-bold text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-full w-fit whitespace-nowrap md:ml-auto md:mt-0.5';
+                        badge.textContent = '画像を見る';
+                        item.appendChild(badge);
+                    }
+
+                    const showRelatedImage = () => {
+                        window.clearTimeout(newsImageResetTimer);
+                        setNewsPreview(relatedImage);
+
+                        newsImageResetTimer = window.setTimeout(() => {
+                            setNewsPreview(standbySrc);
+                        }, 5000);
+                    };
+
+                    item.addEventListener('click', showRelatedImage);
+                    item.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            showRelatedImage();
+                        }
+                    });
+                });
             }
         });
     </script>
