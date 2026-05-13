@@ -6,9 +6,10 @@ This file explains how to update the website, especially the news section.
 
 - The local website folder already includes the interactive news image feature.
 - The news standby image is `news-standby.jpg`.
-- One related news image is currently included: `news-2026-03-04-website-open.jpg`.
+- Two related news images are currently included: `news-2026-05-12-zemi.jpg` and `news-2026-03-04-website-open.jpg`.
+- The `2026.05.12` news item is linked to `news-2026-05-12-zemi.jpg`.
 - The `2026.03.04` news item is linked to `news-2026-03-04-website-open.jpg`.
-- GitHub push was not completed because authentication stopped. Push can be retried later.
+- All changes have been pushed to GitHub.
 
 ## News image rules
 
@@ -36,20 +37,20 @@ News item with a related image:
 <li class="news-item ..." data-news-image="news-2026-04-01-new-student.jpg">
 ```
 
-## Current image-enabled news item
+## Current image-enabled news items
+
+```html
+<li class="news-item ..." data-news-image="news-2026-05-12-zemi.jpg">
+```
+
+```text
+2026.05.12 — 精神看護学研究室の定例ゼミ（毎週火曜日）が開始しています。発表は学生と教員が順番に担当し、お互いの研究について議論し高め合っています。
+```
 
 ```html
 <li class="news-item ..." data-news-image="news-2026-03-04-website-open.jpg">
 ```
 
-Displayed news date:
-
 ```text
-2026.03.04
-```
-
-Displayed news text:
-
-```text
-精神看護学研究室のウェブサイトを公開いたしました。
+2026.03.04 — 精神看護学研究室のウェブサイトを公開いたしました。
 ```

@@ -696,12 +696,14 @@
             const newsPreviewImage = document.getElementById('news-preview-image');
             const newsItems = document.querySelectorAll('.news-item');
             let newsImageResetTimer;
+            let newsImageFadeTimer;
 
             function setNewsPreview(src) {
                 if (!newsPreviewImage || !src) return;
 
+                window.clearTimeout(newsImageFadeTimer);
                 newsPreviewImage.style.opacity = '0';
-                window.setTimeout(() => {
+                newsImageFadeTimer = window.setTimeout(() => {
                     newsPreviewImage.src = src;
                     newsPreviewImage.style.opacity = '1';
                 }, 150);
@@ -735,6 +737,7 @@
 
                     const showRelatedImage = () => {
                         window.clearTimeout(newsImageResetTimer);
+                        window.clearTimeout(newsImageFadeTimer);
                         setNewsPreview(relatedImage);
 
                         newsImageResetTimer = window.setTimeout(() => {
