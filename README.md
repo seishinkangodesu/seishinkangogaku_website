@@ -2,6 +2,11 @@
 
 This file explains how to update the website, especially the news section.
 
+## 作業前後の手順
+
+1. **作業開始前** に必ず `git pull` でGitHubから最新の状態を取得する（競合を防ぐため）
+2. 変更後は `git add`, `git commit`, `git push` でGitHubへ反映する
+
 ## Current local status
 
 - The local website folder already includes the interactive news image feature.
@@ -36,6 +41,26 @@ News item with a related image:
 ```html
 <li class="news-item ..." data-news-image="news-2026-04-01-new-student.jpg">
 ```
+
+## セキュリティ管理
+
+### 2026-05-29 セキュリティ確認済み
+
+- APIキー・パスワードの直書きがないことを確認済み
+- バックエンドファイルは存在しない（HTML・画像のみの静的サイト）
+- GitHub Pagesでホスティングのため、バックエンドのリスクなし
+
+### .gitignore 更新（2026-05-29）
+
+以下のファイルをGitの管理対象から除外する設定を追加した：
+
+- `.env` — APIキー等の秘密情報ファイル
+- `*.key` / `*.pem` / `*.p12` / `*.pfx` — 証明書ファイル
+- `Thumbs.db` / `Desktop.ini` / `.DS_Store` — OSが自動生成するファイル
+
+将来APIキーが必要な機能を追加する際は、必ず`.env`ファイルに値を記載し、コードには直書きしないこと。
+
+---
 
 ## Current image-enabled news items
 
