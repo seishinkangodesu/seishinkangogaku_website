@@ -11,7 +11,8 @@ This file explains how to update the website, especially the news section.
 
 - The local website folder already includes the interactive news image feature.
 - The news standby image is `news-standby.jpg`.
-- Two related news images are currently included: `news-2026-05-12-zemi.jpg` and `news-2026-03-04-website-open.jpg`.
+- Three related news images are currently included: `news-2026-06-02-online-record.jpg`, `news-2026-05-12-zemi.jpg`, and `news-2026-03-04-website-open.jpg`.
+- The `2026.06.02` news item is linked to `news-2026-06-02-online-record.jpg`.
 - The `2026.05.12` news item is linked to `news-2026-05-12-zemi.jpg`.
 - The `2026.03.04` news item is linked to `news-2026-03-04-website-open.jpg`.
 - All changes have been pushed to GitHub.
@@ -63,6 +64,14 @@ News item with a related image:
 ---
 
 ## Current image-enabled news items
+
+```html
+<li class="news-item ..." data-news-image="news-2026-06-02-online-record.jpg">
+```
+
+```text
+2026.06.02 — 精神看護学領域（＝研究室）の学部教育では、これまで演習でペーパーの記録用紙を使用していましたが、今年から領域にカスタマイズしたオンライン記録用紙を試行的に取り入れています。
+```
 
 ```html
 <li class="news-item ..." data-news-image="news-2026-05-12-zemi.jpg">
