@@ -11,7 +11,8 @@ This file explains how to update the website, especially the news section.
 
 - The local website folder already includes the interactive news image feature.
 - The news standby image is `news-standby.jpg`.
-- Three related news images are currently included: `news-2026-06-02-online-record.jpg`, `news-2026-05-12-zemi.jpg`, and `news-2026-03-04-website-open.jpg`.
+- Four related news images are currently included: `news-2026-07-18-kenkyu-keikaku-happyo.jpg`, `news-2026-06-02-online-record.jpg`, `news-2026-05-12-zemi.jpg`, and `news-2026-03-04-website-open.jpg`.
+- The `2026.07.18` news item is linked to `news-2026-07-18-kenkyu-keikaku-happyo.jpg`.
 - The `2026.06.02` news item is linked to `news-2026-06-02-online-record.jpg`.
 - The `2026.05.12` news item is linked to `news-2026-05-12-zemi.jpg`.
 - The `2026.03.04` news item is linked to `news-2026-03-04-website-open.jpg`.
@@ -64,6 +65,14 @@ News item with a related image:
 ---
 
 ## Current image-enabled news items
+
+```html
+<li class="news-item ..." data-news-image="news-2026-07-18-kenkyu-keikaku-happyo.jpg">
+```
+
+```text
+2026.07.18 — M1のI.R.さんが大学院の「看護研究演習」の研究計画発表をしました。「たくさんの意見を貰って勉強になりました。（by 本人）」とのことでした。これからも一緒に頑張っていきましょう！　※画像は予演の様子です。
+```
 
 ```html
 <li class="news-item ..." data-news-image="news-2026-06-02-online-record.jpg">
