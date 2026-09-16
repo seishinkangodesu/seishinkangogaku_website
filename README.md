@@ -103,7 +103,7 @@ News item with a related image:
 ## 資料投入口（教員が自分で資料を掲載する仕組み）
 
 教員本人がGoogleフォームに資料（PDF・画像）を投入すると、「もっと詳しく見る」内の
-「資料・発表スライド」に自動で表示される。設置手順は [docs/README.md](docs/README.md) を参照。
+「資料」に自動で表示される。設置手順は [docs/README.md](docs/README.md) を参照。
 
 - 投入口のURLが教員を識別するため、**どのGoogleアカウントから投入してもよい**
 - 大学アカウント（@hyo-med.ac.jp）は学外共有が禁止されているため**使えない**
