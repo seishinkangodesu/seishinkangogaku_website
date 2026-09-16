@@ -324,6 +324,14 @@
                                     </div>
                                     <!-- ============================================== -->
 
+                                    <!-- 資料セクション（投入口から自動反映。中身はスクリプトが描画する） -->
+                                    <div class="doc-section hidden" data-doc-member="fujimoto">
+                                        <h4
+                                            class="font-bold text-slate-900 text-lg mt-8 mb-3 border-l-4 border-slate-900 pl-3">
+                                            資料・発表スライド</h4>
+                                        <div class="doc-list"></div>
+                                    </div>
+
                                 </div>
 
                                 <!-- Modal Footer -->
@@ -883,6 +891,189 @@
             updateSlides();
             setInterval(nextSlide, 6000); // Change image every 6 seconds
         }
+    </script>
+
+    <!-- 資料セクション（投入口 → スプレッドシート → サイト） -->
+    <script>
+        (function () {
+            // ===== 設定 ==================================================
+            // 教員ごとの資料一覧。スプレッドシートを
+            // 「ファイル → 共有 → ウェブに公開 → CSV」で公開したURLを貼る。
+            // 空のままなら、この教員の資料セクションは表示されない。
+            const DOC_SOURCES = {
+                fujimoto: ''
+            };
+
+            // 下書きを表示するための合言葉。?preview=この値 でアクセスすると
+            // 「下書き」状態の資料も見える（通常の訪問者には見えない）。
+            const PREVIEW_TOKEN = 'shiryo2026';
+            // =============================================================
+
+            const isPreview =
+                new URLSearchParams(location.search).get('preview') === PREVIEW_TOKEN;
+
+            // --- CSVを配列に変換（引用符内のカンマ・改行にも対応） ---
+            function parseCsv(text) {
+                const rows = [];
+                let row = [], field = '', inQuotes = false;
+
+                for (let i = 0; i < text.length; i++) {
+                    const c = text[i];
+                    if (inQuotes) {
+                        if (c !== '"') { field += c; continue; }
+                        if (text[i + 1] === '"') { field += '"'; i++; continue; }
+                        inQuotes = false;
+                    } else if (c === '"') {
+                        inQuotes = true;
+                    } else if (c === ',') {
+                        row.push(field); field = '';
+                    } else if (c === '\n') {
+                        row.push(field); rows.push(row); row = []; field = '';
+                    } else if (c !== '\r') {
+                        field += c;
+                    }
+                }
+                if (field !== '' || row.length) { row.push(field); rows.push(row); }
+                return rows;
+            }
+
+            // --- 見出し行から、目的の列の位置を探す ---
+            function columnOf(headers, ...keywords) {
+                for (const key of keywords) {
+                    const index = headers.findIndex(h => h.includes(key));
+                    if (index >= 0) return index;
+                }
+                return -1;
+            }
+
+            // --- 資料URLを、ページ内で閲覧できる形に変換する ---
+            function viewerFor(url) {
+                const driveId = url.includes('drive.google.com') && url.match(/[-\w]{25,}/);
+                if (driveId) {
+                    return { tag: 'iframe', src: 'https://drive.google.com/file/d/' + driveId[0] + '/preview' };
+                }
+                if (/\.(jpe?g|png|gif|webp|svg)(\?|$)/i.test(url)) {
+                    return { tag: 'img', src: url };
+                }
+                return { tag: 'iframe', src: url };
+            }
+
+            // --- 資料1件分のカードを組み立てる ---
+            function buildCard(item) {
+                const card = document.createElement('div');
+                card.className = 'border border-slate-200 rounded-xl overflow-hidden mb-3 bg-white';
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className =
+                    'w-full text-left px-4 py-3 flex items-start gap-3 hover:bg-slate-50 transition-colors';
+
+                const label = document.createElement('div');
+                label.className = 'flex-1 min-w-0';
+                label.innerHTML =
+                    '<div class="font-bold text-slate-900 text-sm md:text-base">' + item.title + '</div>' +
+                    (item.description
+                        ? '<div class="text-xs md:text-sm text-slate-600 mt-1 leading-relaxed">' + item.description + '</div>'
+                        : '');
+
+                if (item.isDraft) {
+                    label.insertAdjacentHTML('afterbegin',
+                        '<span class="inline-block text-[10px] font-bold text-amber-700 bg-amber-100 ' +
+                        'px-2 py-0.5 rounded-full mb-1">下書き（公開前）</span>');
+                }
+
+                const arrow = document.createElement('span');
+                arrow.className = 'text-slate-400 text-lg leading-none mt-0.5 transition-transform flex-shrink-0';
+                arrow.textContent = '▾';
+
+                button.append(label, arrow);
+
+                const viewer = document.createElement('div');
+                viewer.className = 'hidden border-t border-slate-100 bg-slate-50 p-3';
+
+                button.addEventListener('click', () => {
+                    const opening = viewer.classList.contains('hidden');
+                    viewer.classList.toggle('hidden', !opening);
+                    arrow.style.transform = opening ? 'rotate(180deg)' : '';
+
+                    // 初回に開いたときだけ読み込む（まとめて読み込まないため）
+                    if (opening && !viewer.dataset.loaded) {
+                        viewer.dataset.loaded = 'yes';
+                        item.files.forEach(url => {
+                            const view = viewerFor(url);
+                            const el = document.createElement(view.tag);
+                            el.src = view.src;
+                            if (view.tag === 'iframe') {
+                                el.className = 'w-full rounded-lg bg-white border border-slate-200';
+                                el.style.height = '70vh';
+                                el.setAttribute('allow', 'autoplay');
+                            } else {
+                                el.className = 'w-full rounded-lg border border-slate-200';
+                                el.alt = item.title;
+                            }
+                            viewer.appendChild(el);
+                        });
+                    }
+                });
+
+                card.append(button, viewer);
+                return card;
+            }
+
+            // --- CSVの中身を、表示できる資料の配列に変換する ---
+            function toItems(csvText) {
+                const rows = parseCsv(csvText).filter(r => r.some(cell => cell.trim() !== ''));
+                if (rows.length < 2) return [];
+
+                const headers = rows[0];
+                const col = {
+                    title: columnOf(headers, 'タイトル'),
+                    description: columnOf(headers, '説明'),
+                    file: columnOf(headers, '資料', 'ファイル'),
+                    status: columnOf(headers, '公開状態', '状態')
+                };
+
+                return rows.slice(1).map(row => {
+                    const status = col.status >= 0 ? row[col.status] || '' : '公開';
+                    const files = col.file >= 0 ? (row[col.file] || '') : '';
+                    return {
+                        title: (col.title >= 0 ? row[col.title] : '') || '（無題）',
+                        description: col.description >= 0 ? row[col.description] || '' : '',
+                        files: files.split(/[,\s]+/).filter(u => /^https?:\/\//.test(u)),
+                        isDraft: status.includes('下書き'),
+                        isDeleted: status.includes('削除')
+                    };
+                }).filter(item => {
+                    if (item.isDeleted) return false;          // 「削除」は誰にも見せない
+                    if (item.isDraft) return isPreview;        // 「下書き」はプレビューのみ
+                    return true;
+                }).reverse();                                  // 新しいものを上に
+            }
+
+            // --- 教員1人分のセクションを描画する ---
+            async function renderSection(section) {
+                const member = section.dataset.docMember;
+                const source = DOC_SOURCES[member];
+                if (!source) return;                           // URL未設定なら何も出さない
+
+                let items;
+                try {
+                    const response = await fetch(source);
+                    if (!response.ok) throw new Error(response.status);
+                    items = toItems(await response.text());
+                } catch (error) {
+                    console.error('資料一覧を読み込めませんでした:', error);
+                    return;
+                }
+                if (!items.length) return;
+
+                const list = section.querySelector('.doc-list');
+                items.forEach(item => list.appendChild(buildCard(item)));
+                section.classList.remove('hidden');
+            }
+
+            document.querySelectorAll('.doc-section').forEach(renderSection);
+        })();
     </script>
 
 </body>
