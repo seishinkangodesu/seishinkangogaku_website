@@ -90,6 +90,31 @@
             z-index: 10;
         }
 
+        /* Slow horizontal pan while a slide is shown (scaled up so edges never show) */
+        .slide.pan {
+            animation: slidePanRight 8s linear forwards;
+        }
+
+        .slide.pan.pan-reverse {
+            animation-name: slidePanLeft;
+        }
+
+        @keyframes slidePanRight {
+            from { transform: scale(1.1) translateX(-3%); }
+            to { transform: scale(1.1) translateX(3%); }
+        }
+
+        @keyframes slidePanLeft {
+            from { transform: scale(1.1) translateX(3%); }
+            to { transform: scale(1.1) translateX(-3%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .slide.pan {
+                animation: none;
+            }
+        }
+
         /* Accordion animation */
         .expandable-content {
             max-height: 0;
@@ -838,8 +863,21 @@
         const indicators = document.querySelectorAll('.indicator');
         const totalSlides = slides.length;
 
+        let previousSlide = -1;
+
         function updateSlides() {
             slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    // Restart the pan; alternate direction slide by slide
+                    slide.classList.remove('pan');
+                    void slide.offsetWidth;
+                    slide.classList.toggle('pan-reverse', index % 2 === 1);
+                    slide.classList.add('pan');
+                } else if (index !== previousSlide) {
+                    // Keep the outgoing slide moving while it fades out
+                    slide.classList.remove('pan');
+                }
+
                 if (index === currentSlide) {
                     slide.classList.add('active');
                     indicators[index].classList.replace('bg-white/40', 'bg-white');
@@ -855,6 +893,7 @@
         }
 
         function nextSlide() {
+            previousSlide = currentSlide;
             currentSlide = (currentSlide + 1) % totalSlides;
             updateSlides();
         }
