@@ -12,6 +12,7 @@ This file explains how to update the website, especially the news section.
 - The local website folder already includes the interactive news image feature.
 - The news standby image is `news-standby.jpg`.
 - Four related news images are currently included: `news-2026-07-18-kenkyu-keikaku-happyo.jpg`, `news-2026-06-02-online-record.jpg`, `news-2026-05-12-zemi.jpg`, and `news-2026-03-04-website-open.jpg`.
+- The `2026.10.21` news item is linked to `news-2026-10-21-kobe-yakei.jpg`.
 - The `2026.10.05` news item is linked to `news-2026-10-05-jisshu.jpg`.
 - The `2026.09.25` news item is linked to `news-2026-09-25-ob-shokujikai.jpg`.
 - The `2026.07.18` news item is linked to `news-2026-07-18-kenkyu-keikaku-happyo.jpg`.
@@ -67,6 +68,14 @@ News item with a related image:
 ---
 
 ## Current image-enabled news items
+
+```html
+<li class="news-item ..." data-news-image="news-2026-10-21-kobe-yakei.jpg">
+```
+
+```text
+2026.10.21 — 大学の近くから見える神戸の夜景です。花火が素晴らしいです。スマホのため画像は荒いです。
+```
 
 ```html
 <li class="news-item ..." data-news-image="news-2026-10-05-jisshu.jpg">
