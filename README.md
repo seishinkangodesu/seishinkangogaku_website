@@ -11,10 +11,11 @@ This file explains how to update the website, especially the news section.
 
 - The local website folder already includes the interactive news image feature.
 - The news standby image is `news-standby.jpg`.
-- Four related news images are currently included: `news-2026-07-18-kenkyu-keikaku-happyo.jpg`, `news-2026-06-02-online-record.jpg`, `news-2026-05-12-zemi.jpg`, and `news-2026-03-04-website-open.jpg`.
+- Eight related news images are currently included: `news-2026-10-21-kobe-yakei.jpg`, `news-2026-10-05-jisshu.jpg`, `news-2026-09-25-ob-shokujikai.jpg`, `news-2026-08-21-janap-conference.jpg`, `news-2026-07-18-kenkyu-keikaku-happyo.jpg`, `news-2026-06-02-online-record.jpg`, `news-2026-05-12-zemi.jpg`, and `news-2026-03-04-website-open.jpg`.
 - The `2026.10.21` news item is linked to `news-2026-10-21-kobe-yakei.jpg`.
 - The `2026.10.05` news item is linked to `news-2026-10-05-jisshu.jpg`.
 - The `2026.09.25` news item is linked to `news-2026-09-25-ob-shokujikai.jpg`.
+- The `2026.08.21` news item is linked to `news-2026-08-21-janap-conference.jpg`.
 - The `2026.07.18` news item is linked to `news-2026-07-18-kenkyu-keikaku-happyo.jpg`.
 - The `2026.06.02` news item is linked to `news-2026-06-02-online-record.jpg`.
 - The `2026.05.12` news item is linked to `news-2026-05-12-zemi.jpg`.
@@ -91,6 +92,14 @@ News item with a related image:
 
 ```text
 2026.09.25 — 本日は精神看護学ゼミ（学部）のOBが食事会を開催してくださいました。みなさんそれぞれ病院、訪問看護ステーションで精神看護の専門性を発揮しながら日々活躍されており、教員一同とても嬉しく思います。とても力を貰いました。
+```
+
+```html
+<li class="news-item ..." data-news-image="news-2026-08-21-janap-conference.jpg">
+```
+
+```text
+2026.08.21 — 第30回日本看護管理学会学術集会に共同演者として向畑講師が参加してきました。たくさんの参加者がいました。写真は会場である東京国際フォーラム入口です。
 ```
 
 ```html
